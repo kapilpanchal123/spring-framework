@@ -1436,4 +1436,54 @@ public class MockHttpServletRequest implements HttpServletRequest {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public String toString() {
+		return "MockHttpServletRequest{" +
+				"servletContext=" + servletContext +
+				", active=" + active +
+				", attributes=" + attributes +
+				", characterEncoding='" + characterEncoding + '\'' +
+				", content=" + Arrays.toString(content) +
+				", contentType='" + contentType + '\'' +
+				", inputStream=" + inputStream +
+				", reader=" + reader +
+				", parameters=" + parameters +
+				", protocol='" + protocol + '\'' +
+				", scheme='" + scheme + '\'' +
+				", serverName='" + serverName + '\'' +
+				", serverPort=" + serverPort +
+				", remoteAddr='" + remoteAddr + '\'' +
+				", remoteHost='" + remoteHost + '\'' +
+				", locales=" + locales +
+				", secure=" + secure +
+				", remotePort=" + remotePort +
+				", localName='" + localName + '\'' +
+				", localAddr='" + localAddr + '\'' +
+				", localPort=" + localPort +
+				", asyncStarted=" + asyncStarted +
+				", asyncSupported=" + asyncSupported +
+				", asyncContext=" + asyncContext +
+				", dispatcherType=" + dispatcherType +
+				", authType='" + authType + '\'' +
+				", cookies=" + Arrays.toString(cookies) +
+				", headers=" + headers +
+				", method='" + method + '\'' +
+				", pathInfo='" + pathInfo + '\'' +
+				", contextPath='" + contextPath + '\'' +
+				", queryString='" + queryString + '\'' +
+				", remoteUser='" + remoteUser + '\'' +
+				", userRoles=" + userRoles +
+				", userPrincipal=" + userPrincipal +
+				", requestedSessionId='" + requestedSessionId + '\'' +
+				", uriTemplate='" + uriTemplate + '\'' +
+				", requestURI='" + requestURI + '\'' +
+				", servletPath='" + servletPath + '\'' +
+				", session=" + session +
+				", requestedSessionIdValid=" + requestedSessionIdValid +
+				", requestedSessionIdFromCookie=" + requestedSessionIdFromCookie +
+				", requestedSessionIdFromURL=" + requestedSessionIdFromURL +
+				", parts=" + parts +
+				", httpServletMapping=" + httpServletMapping +
+				'}';
+	}
 }

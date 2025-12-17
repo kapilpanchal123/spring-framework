@@ -103,4 +103,12 @@ public class MockServletConfig implements ServletConfig {
 		return Collections.enumeration(this.initParameters.keySet());
 	}
 
+	@Override
+	public String toString() {
+		return "MockServletConfig{" +
+				"servletContext=" + servletContext +
+				", servletName='" + servletName + '\'' +
+				", initParameters=" + initParameters +
+				'}';
+	}
 }

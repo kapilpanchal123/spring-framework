@@ -17,6 +17,7 @@
 package org.springframework.web.servlet;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
@@ -26,9 +27,12 @@ import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -982,4 +986,41 @@ class DispatcherServletTests {
 		}
 	}
 
+	@Test
+	void dispatcherServlet_helloWorld() throws IOException, ServletException {
+		System.out.println("DispatcherServlet_Helloworld_Tests1");
+		assertThat((simpleDispatcherServlet.getNamespace())).as("Correct namespace")
+				.isEqualTo("simple" + FrameworkServlet.DEFAULT_NAMESPACE_SUFFIX);
+		System.out.println(simpleDispatcherServlet.getNamespace());
+
+//		MockHttpServletRequest request = new MockHttpServletRequest(getServletContext(), "GET", "/invalid.do");
+		MockHttpServletRequest request = new MockHttpServletRequest(getServletContext(), "GET", "example.com");
+		request.setParameter("name","Firstname1");
+		request.addHeader("X-API-Version","v1.0");
+//		request.removeHeader("X-API-Version");
+		request.addHeader("X-API-Version","v2.0");
+		assertThat(request.getParameter("name").equalsIgnoreCase("firstname1"));
+		request.getInputStream();
+		System.out.println(request.getParameter("name"));
+		System.out.println(request.getHeader("X-API-Version"));
+		request.setContentType("application/json");
+		request.setContent("""
+			{
+				"name": "Firstname1"
+			}
+		""".getBytes(StandardCharsets.UTF_8));
+
+		System.out.println(request);
+		System.out.println(request.getInputStream());
+		ServletInputStream is = request.getInputStream();
+		String body = new String(is.readAllBytes(), StandardCharsets.UTF_8);
+		System.out.println(body);
+
+		MockHttpServletResponse response = new MockHttpServletResponse();
+		complexDispatcherServlet.service(request, response);
+		ComplexWebApplicationContext.TestApplicationListener listener = (ComplexWebApplicationContext.TestApplicationListener) complexDispatcherServlet
+						.getWebApplicationContext().getBean("testListener");
+		assertThat(listener.counter).isOne();
+		System.out.println(listener.counter);
+	}
 }

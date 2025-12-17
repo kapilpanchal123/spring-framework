@@ -82,3 +82,10 @@ dependencies {
 	testRuntimeOnly("org.python:jython-standalone")
 	testRuntimeOnly("org.webjars:underscorejs")
 }
+
+tasks.withType(Test).configureEach {
+    testLogging {
+        showStandardStreams = true
+        events "passed", "failed", "skipped"
+    }
+}
